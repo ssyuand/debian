@@ -1,0 +1,206 @@
+[user]
+	email = ssyuand@gmail.com
+	name = ssyuand
+[core]
+	editor = nvim
+	pager = delta --line-numbers
+	excludesfile = ~/.gitignore
+[alias]
+	commend = commit --amend --no-edit
+	it = !git init && git commit -m "root" --allow-empty
+	st = stash
+	stsh = stash --keep-index
+	staash = stash --include-untracked
+	staaash = stash --all
+	now = status --short --branch
+        s = status
+	ck = checkout
+	fa = fetch --all --prune --tags --jobs=10
+	com = commit -m
+	reb = rebase
+	br = branch
+	bv = branch -vv
+	bvr = branch -vvr
+	df = diff
+	ds = diff --staged
+	lg = !"                                                                                                                                                                                                          \
+		function glg() {                                                                                                                                                                                             \
+			git log --color=always --graph --abbrev-commit --decorate --glob=\"refs/heads/*\"                                                                                                                        \
+				--format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) (%xFFGPG_%G?%xFF) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\" \"$@\" | \
+			sed -e 's/\\xFFGPG_G\\xFF/'\"$(printf '\\e[1;32mG\\e[0m')\"'/g' -e 's/\\xFFGPG_B\\xFF/'\"$(printf '\\e[1;41mB\\e[0m')\"'/g'                                                                              \
+				-e 's/\\xFFGPG_U\\xFF/'\"$(printf '\\e[1;36mU\\e[0m')\"'/g' -e 's/\\xFFGPG_X\\xFF/'\"$(printf '\\e[1;31mX\\e[0m')\"'/g'                                                                              \
+				-e 's/\\xFFGPG_Y\\xFF/'\"$(printf '\\e[1;31mY\\e[0m')\"'/g' -e 's/\\xFFGPG_R\\xFF/'\"$(printf '\\e[1;31mR\\e[0m')\"'/g'                                                                              \
+				-e 's/\\xFFGPG_E\\xFF/'\"$(printf '\\e[1;35mE\\e[0m')\"'/g' -e 's/\\xFFGPG_N\\xFF/'\"$(printf '\\e[1;30mN\\e[0m')\"'/g' |                                                                            \
+			less -F -S -R -i;                                                                                                                                                                                        \
+		};                                                                                                                                                                                                           \
+		glg                                                                                                                                                                                                          \
+	"
+	doom = !"                                                                                                                      \
+		function doom() {                                                                                                          \
+			set -e;                                                                                                                \
+			local RED='\\033[0;31m';                                                                                               \
+			local NC='\\033[0m';                                                                                                   \
+			if [[ \"$(ps -o comm= $PPID)\" =~ ^n?vim$ ]] || [[ \"$(tput colors)\" != \"256\" ]]; then                              \
+				RED='~'; NC='~';                                                                                                   \
+			fi;                                                                                                                    \
+			local branch;                                                                                                          \
+			local remote;                                                                                                          \
+			local tracking;                                                                                                        \
+			local last;                                                                                                            \
+			branch=\"$(git branch --show-current)\";                                                                               \
+			if [[ -z \"$branch\" ]]; then                                                                                          \
+				printf 'Detached, no current branch\\n';                                                                           \
+				exit 1;                                                                                                            \
+			fi;                                                                                                                    \
+			case \"$branch\" in                                                                                                    \
+				\"master\"|\"main\"|\"develop\")                                                                                   \
+					printf 'Not allowed to doom %b%s%b branch\\n' \"$RED\" \"$branch\" \"$NC\";                                    \
+					exit 1;                                                                                                        \
+					;;                                                                                                             \
+				*)                                                                                                                 \
+					;;                                                                                                             \
+			esac;                                                                                                                  \
+			remote=\"$(git config branch.$branch.remote)\";                                                                        \
+			tracking=\"$(git config branch.$branch.merge)\";                                                                       \
+			if [[ -z \"$remote\" ]] || [[ -z \"$tracking\" ]]; then                                                                \
+				printf 'Branch %b%s%b does not exist in remote\\n' \"$RED\" \"$branch\" \"$NC\";                                   \
+				exit 1;                                                                                                            \
+			fi;                                                                                                                    \
+			last=\"$(git reflog | rg 'checkout: moving from' | head -1 | sed 's/.*checkout: moving from \\([^ ]*\\) to.*/\\1/')\"; \
+			if [[ -z \"$last\" ]]; then                                                                                            \
+				printf 'Cannot find last branch\\n';                                                                               \
+				exit 1;                                                                                                            \
+			fi;                                                                                                                    \
+			if ! git show \"$last\" >/dev/null 2>&1; then                                                                          \
+				printf 'Last branch %s does not exist\\n' \"$last\";                                                               \
+				exit 1;                                                                                                            \
+			fi;                                                                                                                    \
+			printf 'Gonna checkout %b%s%b then remove local branch %b%s%b and remote branch %b%s/%s%b, sure? [y/n] '               \
+				\"$RED\" \"$last\" \"$NC\" \"$RED\" \"$branch\" \"$NC\" \"$RED\" \"$remote\" \"$tracking\" \"$NC\";                \
+			read -n 1 -r; printf '\\n';                                                                                            \
+			if [[ \"$REPLY\" != 'y' ]]; then                                                                                       \
+				exit 0;                                                                                                            \
+			fi;                                                                                                                    \
+			git checkout \"$last\";                                                                                                \
+			git branch -D \"$branch\";                                                                                             \
+			git push \"$remote\" -d \"$tracking\";                                                                                 \
+		};                                                                                                                         \
+		doom                                                                                                                       \
+	"
+	https-remote = !"                                                                                                          \
+		function https_remote() {                                                                                              \
+			set -e;                                                                                                            \
+			local push;                                                                                                        \
+			local remote;                                                                                                      \
+			if [[ \"$1\" == \"--push\" ]]; then                                                                                \
+				push=\"--push\";                                                                                               \
+				shift;                                                                                                         \
+			fi;                                                                                                                \
+			remote=\"$1\";                                                                                                     \
+			if [[ -z \"$remote\" ]]; then                                                                                      \
+				printf 'Missing remote name\\n';                                                                               \
+				exit 1;                                                                                                        \
+			fi;                                                                                                                \
+			local old_url=\"$(git remote get-url $push \"$remote\")\";                                                         \
+			local new_url=\"$(sed 's|^\\(ssh://\\)\\?git@\\(.*\\):\\(.*\\)/\\(.*\\)$|https://\\2/\\3/\\4|' <<<\"$old_url\")\"; \
+			git remote set-url $push \"$remote\" \"$new_url\";                                                                 \
+			git remote -v;                                                                                                     \
+		};                                                                                                                     \
+		https_remote                                                                                                           \
+	"
+	lga = !git lg --all
+	lgl = !git log --color=always --graph --abbrev-commit --decorate --all --format=format:\"%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)\"
+	ls = !"                                                                                                                                                                              \
+		function gfzf() {                                                                                                                                                                 \
+			local filter=\"$@\";                                                                                                                                                          \
+			local -a show_filter;                                                                                                                                                         \
+			while [[ \"$#\" -gt 0 ]]; do                                                                                                                                                  \
+				if [[ \"$1\" == \"--\" ]] || [[ \"$1\" != '-'* ]] || [[ \"${#show_filter[@]}\" -gt 0 ]]; then                                                                             \
+					show_filter+=( \"$1\" );                                                                                                                                              \
+				fi;                                                                                                                                                                       \
+				shift;                                                                                                                                                                    \
+			done;                                                                                                                                                                         \
+			if [[ \"${show_filter[0]}\" == '--' ]]; then                                                                                                                                  \
+				show_filter=( \"${show_filter[@]:1}\" );                                                                                                                                  \
+			fi;                                                                                                                                                                           \
+			export LESS='-R';                                                                                                                                                             \
+			export BAT_PAGER='less -S -R -M -i';                                                                                                                                          \
+			git log                                                                                                                                                                       \
+				--graph --color=always --abbrev=7 --glob=\"refs/heads/*\"                                                                                                                 \
+				--format=format:\"%C(bold blue)%h%C(reset) %C(dim white)%an%C(reset)%C(bold yellow)%d%C(reset) %C(white)%s%C(reset) %C(bold green)(%ar)%C(reset)\" $filter |              \
+					fzf --ansi --no-sort --layout=reverse --tiebreak=index                                                                                                                \
+						--preview=\"f() {                                                                                                                                                 \
+								set -- \\$(echo -- \\$@ | rg -o '\\b[a-f0-9]{7,}\\b');                                                                                                    \
+								[ \\$# -eq 0 ] || git show --color=always --format=fuller \\$1 -- \"${show_filter[@]}\" | delta --line-numbers;                                           \
+							};                                                                                                                                                            \
+							f {}\"                                                                                                                                                        \
+						--bind=\"ctrl-j:preview-down,ctrl-k:preview-up,ctrl-f:preview-page-down,ctrl-b:preview-page-up\"                                                                  \
+						--bind=\"ctrl-m:execute:                                                                                                                                          \
+								(rg -o '\\b[a-f0-9]{7,}\\b' | head -1 | xargs -I % -- git show --color=always %) << FZFEOF\n                                                              \
+								{}                                                                                                                                                        \
+								\nFZFEOF\"                                                                                                                                                \
+						--bind=\"alt-h:execute-silent:                                                                                                                                    \
+								(f() { set -- \\$(rg -o '\\b[a-f0-9]{7,}\\b' | head -1 | tr -d \\$'\\n');                                                                                 \
+								[[ -n \\$TMUX ]] && tmux display -d0 \\\"#[bg=blue,italics] Branches #[none,fg=black,bg=default] \\$(git branch --contains \\$1 | sed 's/^\\*\\?\\s\\+//' \
+								| sort | paste -sd, - | sed 's/,/, /g')\\\"; }; f) << FZFEOF\n                                                                                            \
+								{}                                                                                                                                                        \
+								\nFZFEOF\"                                                                                                                                                \
+						--bind=\"alt-H:execute-silent:                                                                                                                                    \
+								(f() { set -- \\$(rg -o '\\b[a-f0-9]{7,}\\b' | head -1 | tr -d \\$'\\n');                                                                                 \
+								SUMMARY=\\\"\\$(git show --format='%s' \\$1 | head -1)\\\";                                                                                               \
+								[[ -n \\$TMUX ]] && tmux display -d0 \\\"#[bg=blue,italics] Branches (Grep) #[none,fg=black,bg=default] \\$(git log --all --format='%H' -F                \
+								--grep=\\\"\\$SUMMARY\\\" | xargs -I{} -- git branch --contains {}                                                                                        \
+								| sed 's/^\\*\\?\\s\\+//' | sort | uniq | paste -sd, - | sed 's/,/, /g')\\\"; }; f) << FZFEOF\n                                                           \
+								{}                                                                                                                                                        \
+								\nFZFEOF\"                                                                                                                                                \
+						--bind=\"alt-n:execute-silent:                                                                                                                                    \
+								(f() { set -- \\$(rg -o '\\b[a-f0-9]{7,}\\b' | head -1 | tr -d \\$'\\n');                                                                                 \
+								[[ -n \\$TMUX ]] && tmux display -d0 \\\"#[bg=blue,italics] Tags #[none,fg=black,bg=default] \\$(git tag --contains \\$1 | sed 's/^\\*\\?\\s\\+//'        \
+								| sort | paste -sd, - | sed 's/,/, /g')\\\"; }; f) << FZFEOF\n                                                                                            \
+								{}                                                                                                                                                        \
+								\nFZFEOF\"                                                                                                                                                \
+						--bind=\"alt-N:execute-silent:                                                                                                                                    \
+								(f() { set -- \\$(rg -o '\\b[a-f0-9]{7,}\\b' | head -1 | tr -d \\$'\\n');                                                                                 \
+								SUMMARY=\\\"\\$(git show --format='%s' \\$1 | head -1)\\\";                                                                                               \
+								[[ -n \\$TMUX ]] && tmux display -d0 \\\"#[bg=blue,italics] Tags (Grep) #[none,fg=black,bg=default] \\$(git log --all --format='%H' -F                    \
+								--grep=\\\"\\$SUMMARY\\\" | xargs -I{} -- git tag --contains {}                                                                                           \
+								| sed 's/^\\*\\?\\s\\+//' | sort | uniq | paste -sd, - | sed 's/,/, /g')\\\"; }; f) << FZFEOF\n                                                           \
+								{}                                                                                                                                                        \
+								\nFZFEOF\"                                                                                                                                                \
+						--bind=\"ctrl-y:execute-silent:                                                                                                                                   \
+								(f() { set -- \\$(rg -o '\\b[a-f0-9]{7,}\\b' | head -1 | tr -d \\$'\\n');                                                                                 \
+								printf '%s' \\$1 | clipboard; [[ -n \\$TMUX ]] && tmux display \\\"#[bg=blue,italics] Yanked #[none,fg=black,bg=default] \\$1\\\"; }; f) << FZFEOF\n      \
+								{}                                                                                                                                                        \
+								\nFZFEOF\"                                                                                                                                                \
+						--bind=\"ctrl-s:execute-silent:                                                                                                                                   \
+								(f() { set -- \\$(rg -o '\\b[a-f0-9]{7,}\\b' | head -1 | tr -d \\$'\\n');                                                                                 \
+								SUMMARY=\\\"\\$(git show --format='%s' \\$1 | head -1)\\\";                                                                                               \
+								printf '%s' \\\"\\$SUMMARY\\\" | clipboard;                                                                                                               \
+								[[ -n \\$TMUX ]] && tmux display \\\"#[bg=blue,italics] Yanked #[none,fg=black,bg=default] \\$SUMMARY\\\"; }; f) << FZFEOF\n                              \
+								{}                                                                                                                                                        \
+								\nFZFEOF\"                                                                                                                                                \
+						--bind=\"ctrl-l:execute:(f() { set -- \\$(rg -o '\\b[a-f0-9]{7,}\\b' | head -1 | tr -d \\$'\\n'); git lgl | less -p \\$1 +'u'; }; f) << FZFEOF\n                  \
+								{}                                                                                                                                                        \
+								\nFZFEOF\"                                                                                                                                                \
+						--preview-window=right:60%;                                                                                                                                       \
+		};                                                                                                                                                                                \
+		gfzf                                                                                                                                                                              \
+	"
+[rerere]
+	enabled = 1
+	autoUpdate = true
+[diff]
+	context = 4
+	colorMoved = default
+[tag]
+	sort = version:refname
+[credential]
+	helper = cache --timeout=3600
+[push]
+	default = upstream
+[pull]
+	ff = only
+[interactive]
+	diffFilter = delta --color-only --line-numbers
+[delta]
+	navigate = true

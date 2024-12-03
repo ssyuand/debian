@@ -1,0 +1,20 @@
+# Terminal_Tool
+neovim            #Text editor
+dhcpcd            #Dhcpcd is a "DHCP" and DHCPv6 client.
+bat               #Rust version of "cat" command with syntax highlighting.
+fd                #Fast, user-friendly alternative to "find" command.
+less              #A terminal based program for viewing text files
+ripgrep           #Rust version of "grep", line-oriented search tool.
+fzf               #Interactive fuzzy finder for the command-line.
+tmux              #Terminal multiplexer.
+zoxide            #Fast directory navigation tool for the terminal.
+npm
+zsh
+zip
+unzip
+
+# Language
+clang
+cargo
+rust
+rust-analyzer
