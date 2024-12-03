@@ -12,7 +12,7 @@ cp $HOME_DIR/debian/files/.tmux.conf $HOME_DIR/
 
 #nvchad
 git clone https://github.com/NvChad/NvChad $HOME_DIR/.config/nvim --depth 1
-cp -r ~/debian/files/custom/ ~/.config/nvim/lua/
+cp -r ~/debian/custom/ ~/.config/nvim/lua/
 
 #zsh
 chsh -s $(which zsh)

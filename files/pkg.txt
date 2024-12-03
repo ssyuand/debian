@@ -2,7 +2,7 @@
 neovim            #Text editor
 dhcpcd            #Dhcpcd is a "DHCP" and DHCPv6 client.
 bat               #Rust version of "cat" command with syntax highlighting.
-fd                #Fast, user-friendly alternative to "find" command.
+fd-find           #Fast, user-friendly alternative to "find" command.
 less              #A terminal based program for viewing text files
 ripgrep           #Rust version of "grep", line-oriented search tool.
 fzf               #Interactive fuzzy finder for the command-line.
@@ -12,9 +12,12 @@ npm
 zsh
 zip
 unzip
+curl
+exa
+docker.io
 
 # Language
 clang
 cargo
-rust
-rust-analyzer
+#rust
+#rust-analyzer
