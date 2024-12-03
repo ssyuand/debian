@@ -1,6 +1,8 @@
 #edit by my own!!!
 # 加载 zinit
 source "${HOME}/.local/share/zinit/zinit.git/zinit.zsh"
+#neovim
+export PATH="$PATH:/opt/nvim-linux64/bin"
 
 ##zoxide
 eval "$(zoxide init zsh --cmd c)"

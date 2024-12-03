@@ -1,23 +1,17 @@
-# Terminal_Tool
-neovim            #Text editor
-dhcpcd            #Dhcpcd is a "DHCP" and DHCPv6 client.
-bat               #Rust version of "cat" command with syntax highlighting.
-fd-find           #Fast, user-friendly alternative to "find" command.
-less              #A terminal based program for viewing text files
-ripgrep           #Rust version of "grep", line-oriented search tool.
-fzf               #Interactive fuzzy finder for the command-line.
-tmux              #Terminal multiplexer.
-zoxide            #Fast directory navigation tool for the terminal.
-npm
-zsh
-zip
-unzip
-curl
-exa
-docker.io
-
-# Language
-clang
-cargo
-#rust
-#rust-analyzer
+# Terminal Tools
+dhcpcd          # DHCP and DHCPv6 client for network configuration
+bat             # Rust-based 'cat' command with syntax highlighting
+fd-find         # Fast alternative to 'find' command
+less            # Text file viewer for terminal
+ripgrep         # Rust-based 'grep' for fast line-oriented search
+fzf             # Command-line fuzzy finder
+tmux            # Terminal multiplexer for managing multiple sessions
+zoxide          # Fast directory navigation tool
+npm             # Node.js package manager
+zsh             # Z shell, a powerful shell for terminal
+zip             # Create compressed ZIP files
+unzip           # Extract files from ZIP archives
+curl            # Transfer data from URLs via command line
+exa             # Enhanced version of 'ls' with better formatting
+docker.io       # Docker container runtime
+htop            # Interactive process viewer
