@@ -27,9 +27,9 @@ source ~/.profile
 rustup component add rust-analyzer
 
 # Install Neovim
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-sudo rm -rf /opt/nvim
-sudo tar -C /opt -xzf nvim-linux64.tar.gz
+git clone https://github.com/neovim/neovim.git && cd neovim
+make CMAKE_BUILD_TYPE=Release
+sudo make install
 
 # Install NvChad for Neovim
 git clone https://github.com/NvChad/starter ~/.config/nvim

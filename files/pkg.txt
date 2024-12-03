@@ -15,3 +15,6 @@ curl            # Transfer data from URLs via command line
 exa             # Enhanced version of 'ls' with better formatting
 docker.io       # Docker container runtime
 htop            # Interactive process viewer
+# Build neovim
+cmake
+gettext
