@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 HOME_DIR="$HOME"
 sudo apt update && sudo apt full-upgrade -y
 sudo apt autoremove -y && sudo apt autoclean -y
