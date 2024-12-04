@@ -37,6 +37,8 @@ SAVEHIST=10000             # Number of commands saved in the .zsh_history file
 HISTFILE=~/.zsh_history    # Location of the history file
 
 # History options
+setopt HIST_IGNORE_DUPS         # Ignore duplicate commands in the current session
+setopt HIST_IGNORE_ALL_DUPS     # Remove older duplicate commands from the history
 setopt INC_APPEND_HISTORY       # Append commands to .zsh_history immediately
 setopt SHARE_HISTORY            # Share history across multiple shells
 setopt HIST_IGNORE_DUPS         # Ignore duplicate commands in the current session
