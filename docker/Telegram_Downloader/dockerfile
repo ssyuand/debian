@@ -1,0 +1,33 @@
+# Use the official Python slim image as the base image
+FROM python:3.11-slim
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Install system dependencies needed for Pyrogram and other libraries
+RUN apt-get update && apt-get install -y \
+    libffi-dev \
+    libssl-dev \
+    && apt-get clean
+
+# Create directories for sessions and downloads
+RUN mkdir -p /app/Session /app/Downloads
+
+# Copy the requirements file into the container
+COPY requirements.txt /app/requirements.txt
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the Python script and additional files into the container
+COPY final.py /app/final.py
+COPY wait_to_download.txt /app/wait_to_download.txt
+
+# Expose the sessions and downloads directories as volumes
+VOLUME ["/app/Session", "/app/Downloads"]
+
+# Run the Python script
+CMD ["python", "final.py"]
