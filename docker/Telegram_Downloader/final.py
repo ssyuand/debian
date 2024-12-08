@@ -1,6 +1,6 @@
 from pyrogram import Client
-import re
 import os
+import re
 from tqdm import tqdm
 
 # Telegram API credentials
@@ -8,8 +8,8 @@ api_id = 28691258
 api_hash = "222fa80556faa119f5a565590039cbff"
 
 # Save path and URL file
-save_path = "/app/Downloads"  # Use the mounted directory for downloads
-url_file = "/app/wait_to_download.txt"  # Adjust path for the mounted file
+save_path = "/home/syuan/Downloads"
+url_file = "wait_to_download.txt"
 os.makedirs(save_path, exist_ok=True)
 
 def parse_url(url):
@@ -62,7 +62,8 @@ def main():
     try:
         # Read URLs from file
         with open(url_file, "r") as file:
-            urls = [line.strip() for line in file if line.strip()]
+            # Skip lines that start with '#' (comments)
+            urls = [line.strip() for line in file if line.strip() and not line.startswith('#')]
         print(f"[INFO] 找到 {len(urls)} 个需要处理的 URL")
 
         if not urls:
@@ -70,8 +71,7 @@ def main():
             return
 
         # Initialize Telegram client
-        session_file = "/app/Session/tg_downloader_session"  # Persist session in mounted directory
-        with Client(session_file, api_id, api_hash) as app:
+        with Client("tg_downloader_session", api_id, api_hash) as app:
             for url in urls:
                 try:
                     chat_id, message_id = parse_url(url)
