@@ -23,11 +23,11 @@ COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the Python script and additional files into the container
-COPY final.py /app/final.py
+COPY main.py /app/main.py
 COPY wait_to_download.txt /app/wait_to_download.txt
 
 # Expose the sessions and downloads directories as volumes
 VOLUME ["/app/Session", "/app/Downloads"]
 
 # Run the Python script
-CMD ["python", "final.py"]
+CMD ["python", "main.py"]

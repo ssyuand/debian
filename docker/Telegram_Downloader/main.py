@@ -1,6 +1,6 @@
 from pyrogram import Client
-import os
 import re
+import os
 from tqdm import tqdm
 
 # Telegram API credentials
@@ -62,8 +62,7 @@ def main():
     try:
         # Read URLs from file
         with open(url_file, "r") as file:
-            # Skip lines that start with '#' (comments)
-            urls = [line.strip() for line in file if line.strip() and not line.startswith('#')]
+            urls = [line.strip() for line in file if line.strip()]
         print(f"[INFO] 找到 {len(urls)} 个需要处理的 URL")
 
         if not urls:
