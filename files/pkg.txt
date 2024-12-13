@@ -14,6 +14,7 @@ unzip           # Extract files from ZIP archives
 curl            # Transfer data from URLs via command line
 exa             # Enhanced version of 'ls' with better formatting
 docker.io       # Docker container runtime
+docker-compose
 glances         # Interactive process viewer
 # Webdav
 apache2
