@@ -22,3 +22,6 @@ apache2-utils
 # Build neovim
 cmake
 gettext
+#network
+ethtool
+rsync
