@@ -51,10 +51,10 @@ sudo venv/bin/python3 main.py
 sudo venv/bin/python3 main.py install libhoudini
 sudo venv/bin/python3 main.py install widevine
 
+#Remove pre-installed Gnome games (Gnome desktop only)
+sudo apt purge iagno lightsoff four-in-a-row gnome-robots pegsolitaire gnome-2048 hitori gnome-klotski gnome-mines gnome-mahjongg gnome-sudoku quadrapassel swell-foop gnome-tetravex gnome-taquin aisleriot gnome-chess five-or-more gnome-nibbles tali ; sudo apt autoremove
 
-# Install NvChad for Neovim
-git clone https://github.com/NvChad/starter ~/.config/nvim
-cp -r $HOME_DIR/debian/custom/ $HOME_DIR/.config/nvim/lua/
+
 
 # Switch to Zsh
 exec /bin/zsh
