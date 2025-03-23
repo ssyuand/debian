@@ -31,6 +31,11 @@ git clone https://github.com/neovim/neovim.git && cd neovim
 make CMAKE_BUILD_TYPE=Release
 sudo make install
 
+# Waydroid
+sudo apt install curl ca-certificates -y
+curl https://repo.waydro.id | sudo bash
+sudo apt install waydroid -y
+
 # Install NvChad for Neovim
 git clone https://github.com/NvChad/starter ~/.config/nvim
 cp -r $HOME_DIR/debian/custom/ $HOME_DIR/.config/nvim/lua/
