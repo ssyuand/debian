@@ -36,18 +36,15 @@ sudo apt install curl ca-certificates -y
 curl https://repo.waydro.id | sudo bash
 sudo apt install waydroid -y
 sudo waydroid init -s GAPPS -f
-sudo sed -i~ -E 's/=.\$\(command -v (nft|ip6?tables-legacy).*/=/g' \
-     /usr/lib/waydroid/data/scripts/waydroid-net.sh
 
 # Waydroid add ibndk & libhoudini and Search Google Play Certification to cetified.
 sudo apt-get install python3.11-venv lzip
-
 git clone https://github.com/casualsnek/waydroid_script
 cd waydroid_script
 python3 -m venv venv
 venv/bin/pip install -r requirements.txt
 sudo venv/bin/python3 main.py
-
+#libhoudini
 sudo venv/bin/python3 main.py install libhoudini
 sudo venv/bin/python3 main.py install widevine
 #waydroid network
