@@ -39,7 +39,7 @@ sudo waydroid init -s GAPPS -f
 sudo sed -i~ -E 's/=.\$\(command -v (nft|ip6?tables-legacy).*/=/g' \
      /usr/lib/waydroid/data/scripts/waydroid-net.sh
 
-# Waydroid add ibndk & libhoudini
+# Waydroid add ibndk & libhoudini and Search Google Play Certification to cetified.
 sudo apt-get install python3.11-venv lzip
 
 git clone https://github.com/casualsnek/waydroid_script
