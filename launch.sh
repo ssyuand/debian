@@ -35,6 +35,7 @@ sudo make install
 sudo apt install curl ca-certificates -y
 curl https://repo.waydro.id | sudo bash
 sudo apt install waydroid -y
+sudo waydroid init -s GAPPS -f
 sudo sed -i~ -E 's/=.\$\(command -v (nft|ip6?tables-legacy).*/=/g' \
      /usr/lib/waydroid/data/scripts/waydroid-net.sh
 
