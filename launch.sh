@@ -48,6 +48,9 @@ python3 -m venv venv
 venv/bin/pip install -r requirements.txt
 sudo venv/bin/python3 main.py
 
+sudo venv/bin/python3 main.py install libhoudini
+sudo venv/bin/python3 main.py install widevine
+
 
 # Install NvChad for Neovim
 git clone https://github.com/NvChad/starter ~/.config/nvim
