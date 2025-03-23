@@ -39,6 +39,16 @@ sudo waydroid init -s GAPPS -f
 sudo sed -i~ -E 's/=.\$\(command -v (nft|ip6?tables-legacy).*/=/g' \
      /usr/lib/waydroid/data/scripts/waydroid-net.sh
 
+# Waydroid ibndk arm
+sudo apt-get install python3.11-venv  
+
+git clone https://github.com/casualsnek/waydroid_script
+cd waydroid_script
+python3 -m venv venv
+venv/bin/pip install -r requirements.txt
+sudo venv/bin/python3 main.py
+
+
 # Install NvChad for Neovim
 git clone https://github.com/NvChad/starter ~/.config/nvim
 cp -r $HOME_DIR/debian/custom/ $HOME_DIR/.config/nvim/lua/
